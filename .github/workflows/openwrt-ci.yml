@@ -8,10 +8,14 @@
 name: OpenWrt-CI
 
 on:
-  schedule:
-    - cron: 0 20 * * *
+  # push:
+    # branches: 
+      # - master
+  # schedule:
+  #   - cron: 0 20 * * *
   release:
     types: [published]
+
 
 jobs:
 
@@ -44,6 +48,13 @@ jobs:
 
           df -h
 
+      - name: 自定义插件主题。
+        run: |
+          cd package
+          mkdir openwrt-packages
+          cd openwrt-packages
+          git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom.git
+          
       - name: Update feeds
         run: |
           sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
